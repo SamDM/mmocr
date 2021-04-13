@@ -33,7 +33,7 @@ def main():
             0].pipeline
 
     # test a single image
-    result = model_inference(model, args.img)
+    result = model_inference(model, args.img, return_data=True)
     if args.print:
         for k, v in result.items():
             if k == "boundary_result":

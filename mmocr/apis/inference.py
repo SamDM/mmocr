@@ -5,7 +5,7 @@ from mmcv.parallel import collate, scatter
 from mmdet.datasets.pipelines import Compose
 
 
-def model_inference(model, img):
+def model_inference(model, img, return_data=False):
     """Inference image(s) with the detector.
 
     Args:
@@ -43,4 +43,8 @@ def model_inference(model, img):
     # forward the model
     with torch.no_grad():
         result = model(return_loss=False, rescale=True, **data)[0]
+
+    if return_data:
+        result['data'] = data
+
     return result
