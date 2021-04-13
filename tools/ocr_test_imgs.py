@@ -100,7 +100,7 @@ def main():
             kwargs_dict = {
                 'gt_label': gt_label,
                 'show': args.show,
-                'out_file': '' if args.show else out_file
+                'out_file': None if args.show else out_file
             }
             model.show_result(img_path, result, **kwargs_dict)
             if gt_label != '':

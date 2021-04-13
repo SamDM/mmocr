@@ -20,6 +20,10 @@ def main():
         '--imshow',
         action='store_true',
         help='Whether show image with OpenCV.')
+    parser.add_argument(
+        '--print',
+        action='store_true',
+        help='Whether to print results to stdout.')
     args = parser.parse_args()
 
     # build the model from a config file and a checkpoint file
@@ -30,7 +34,20 @@ def main():
 
     # test a single image
     result = model_inference(model, args.img)
-    print(f'result: {result}')
+    if args.print:
+        for k, v in result.items():
+            if k == "boundary_result":
+                print(k)
+                for poly_score in v:
+                    score = poly_score[-1]
+                    poly = poly_score[:-1]
+                    print(f"poly with score: {score} ({poly})")
+            elif k == "text":
+                print(f"text: {v}")
+            elif k == "score":
+                print(f"score: {v}")
+            else:
+                print(f"unknown result type for key {k}: {v}")
 
     # show the results
     img = model.show_result(args.img, result, out_file=None, show=False)
